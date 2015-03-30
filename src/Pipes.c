@@ -29,7 +29,7 @@ int main (int argc, char **argv)
 	{
 			
 
-	        // Essential: close all other pipes and copies of pipes
+	        
 	        
 			
 			char buffer[100];
@@ -56,12 +56,12 @@ int main (int argc, char **argv)
 	pid[1]=fork();
 	if(pid[1] == 0)
 	{
-	        //printf("started 1\n");
+	        
 	        // Process B reads from process A
 	        dup2(ab[0], STDIN_FILENO);
 	        // Process B writes to process C
 	        dup2(bc[1], STDOUT_FILENO);
-	        // Essential: close all other pipes and copies of pipes
+	        
 	        for(int i=0; i<2; i++)
 	        { close(ab[i]); close(bc[i]); close(ca[i]); }
 
@@ -70,14 +70,13 @@ int main (int argc, char **argv)
 	        strrev(str);
 	        printf("%s\n", str);
 
-	        // quit so your child doesn't end up in the main program
 	        exit(0);
 	}
 
 	pid[2]=fork();
 	if(pid[2] == 0)
 	{
-	        // printf("started 2\n");
+	        
 	        // Process C reads from process B
 	        dup2(bc[0], STDIN_FILENO);
 	        // Process C writes to process A
@@ -95,12 +94,11 @@ int main (int argc, char **argv)
 
 	        
 	        printf("%s\n", str);
-	        // quit so your child doesn't end up in the main program
+	        
 	        exit(0);
 	}
 
-	// Only the parent will be running outside of those if statements.
-	// Essential: close all other pipes and copies of pipes
+	
 	for(int i=0; i<2; i++)
 	{ close(ab[i]); close(bc[i]); close(ca[i]); }
 
@@ -110,6 +108,6 @@ int main (int argc, char **argv)
     wait();
     
 	
-
 	//How can you implement this logic for n processes?
+	//This will help you implement piped commands on your shell
 }
